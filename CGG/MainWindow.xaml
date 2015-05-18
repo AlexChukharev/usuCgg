@@ -1,0 +1,29 @@
+﻿<Window x:Class="CGG.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="360" Width="525" Name="mainWindow">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="108"/>
+            <ColumnDefinition Width="409*" MinWidth="400"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="23"/>
+            <RowDefinition Height="297*" MinHeight="297"/>
+        </Grid.RowDefinitions>
+        
+        <Menu Grid.ColumnSpan="2" Height="26" VerticalAlignment="Top" Grid.RowSpan="2">
+            <MenuItem Header="_File" Height="30">
+                <MenuItem Header="_Task1" Click="MenuFirstTaskClick"/>
+                <MenuItem Header="_Task2" Click="MenuSecondTaskClick"/>
+                <MenuItem Header="_Task3" Click="MenuThirdTaskClick"/>
+                <Separator />
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_About" Height="30" Click="AboutClick"/>
+        </Menu>
+        
+        <StackPanel HorizontalAlignment="Left" Grid.Row ="1" Orientation="Vertical" VerticalAlignment="Top" Name = "ArgsForm"/> 
+        <Canvas Grid.Column="1" HorizontalAlignment="Left" MinHeight="277" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" MinWidth="389" Name="canvas"/>
+    </Grid>
+</Window>

@@ -52,4 +52,13 @@ namespace CGG
 			Set("b", a[0].Text == "" ? 11 : double.Parse(a[0].Text));
 		}
 	}
+
+	public class FourthArgs : Arg
+	{
+		public FourthArgs(IList<TextBox> a)
+		{
+
+		}
+		
+	}
 }

@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Media.Effects;
 
 namespace CGG
 {
 	public partial class PolyCordForm : Form
 	{
 		private bool _color = true;		//if true then blue poligon paint else green poligon
-		public Poly BluePoly;
-		public Poly GreenPoly;
+		public Poly BluePoly = new Poly();
+		public Poly GreenPoly = new Poly();
+		public Bitmap bitmp;
+		private readonly int _heigth = 467;
+		private readonly int _width = 596;
+
 		public PolyCordForm()
 		{
 			InitializeComponent();
@@ -25,13 +21,37 @@ namespace CGG
 
 		private void ClickHandler(object sender, EventArgs e)
 		{
-			double x = MousePosition.X;
-			double y = MousePosition.Y;
+			double x = MousePosition.X - Location.X - pictureBox1.Location.X - 7;
+			double y = MousePosition.Y - Location.Y - pictureBox1.Location.Y - 34;
 			if (_color)
 				BluePoly.AddVerb(x, y);
 			else
 				GreenPoly.AddVerb(x, y);
+			PointAdder();
 		}
+
+		public void DrawPoly(Color color, Poly poly)
+		{
+			var g = Graphics.FromImage(bitmp);
+			if (poly.Start == null) return;
+			if (poly.Start == poly.End)
+			{
+				var x = (int)poly.Start.X;
+				var y = (int)poly.Start.Y;
+				g.DrawEllipse(new Pen(color), x - 1, y - 1, 2, 2);
+			}
+			else
+				foreach (var e in poly.Edges)
+					g.DrawLine(new Pen(color, 3f), new Point((int)e.A.X, (int)e.A.Y), new Point((int)e.B.X, (int)e.B.Y));
+		}
+
+		public void PointAdder()
+		{
+			bitmp = new Bitmap(_width, _heigth);
+			DrawPoly(Color.Blue, BluePoly);
+			DrawPoly(Color.Green, GreenPoly);
+			pictureBox1.Image = bitmp;
+		} 
 
 		private void Button1ClickHandler(object sender, EventArgs e)
 		{
@@ -40,12 +60,15 @@ namespace CGG
 
 		private void GoClickHander(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			//var redPoly = Poly.Intersection(BluePoly, GreenPoly);
+			//DrawPoly(Color.DarkRed, redPoly);
 		}
 
 		private void RefreshClickHandler(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			pictureBox1.Image = new Bitmap(_width, _heigth);
+			BluePoly = new Poly();
+			GreenPoly = new Poly();
 		}
 	}
 }

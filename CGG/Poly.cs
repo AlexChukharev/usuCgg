@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Media;
 
 namespace CGG
 {
@@ -9,7 +8,6 @@ namespace CGG
     {
         public Verb End;
         public Verb Start;
-        public Object Color;
         public List<Edge> _edges;
         public List<Edge> Edges 
         {
@@ -22,10 +20,9 @@ namespace CGG
             }
         }
 
-        public Poly(object input)
+        public Poly()
         {
             _edges = new List<Edge>();
-            Color = input;
         }
 
         public void AddVerb(double x, double y)
@@ -46,7 +43,7 @@ namespace CGG
 
         public static Poly Intersection(Poly a, Poly b)
         {
-            var result = new Poly(Brushes.DarkRed);
+            var result = new Poly();
             foreach (var current in a.Edges)
                 result._edges.AddRange(current.Partion(b));
             foreach (var current in b.Edges)
@@ -77,30 +74,17 @@ namespace CGG
             var result = new List<Edge>();
             var flag = true;
 
-            foreach (var edge in input.Edges)                   //перебор отсекающих ребер
+            foreach (var verb in input.Edges.Select(Intersection).Where(verb => verb != null))
             {
-                var verb = Intersection(edge);
-                if (verb != null)
-                {
-                    result.AddRange(new Edge(A, verb).Partion(input));
-                    result.AddRange(new Edge(B, verb).Partion(input));
-                    flag = false;
-                    break;
-                }
+	            result.AddRange(new Edge(A, verb).Partion(input));
+	            result.AddRange(new Edge(B, verb).Partion(input));
+	            flag = false;
+	            break;
             }
-//            if (flag)
-//            {
-////                if (!A.IsInternal(input) || !B.IsInternal(input))
-//                    if (!(new Verb((A.X + B.X) / 2, (A.Y + B.Y) / 2).IsInternal(input)))
-//                        return result;
-//                result.Add(this);
-//            } 
-            if (flag)         //если отрезок более не делим, то проверяем лежит ли он внутри многоуголника а
-            {
-                if ((new Verb((A.X + B.X) / 2, (A.Y + B.Y) / 2).IsInternal(input)))
-                    result.Add(this); 
-            }
-            return result;
+	        if (!flag) return result;
+	        if ((new Verb((A.X + B.X) / 2, (A.Y + B.Y) / 2).IsInternal(input)))
+		        result.Add(this);
+	        return result;
         }
 
 
@@ -136,7 +120,7 @@ namespace CGG
         public bool IsInternal(Poly a)                      //проверка является ли точка внутренней
         {
             var count = 0;
-            var edge = new Edge(new Verb(X, Y), new Verb(550, Y+10));
+            var edge = new Edge(new Verb(X, Y), new Verb(1100, Y+10));
 
             foreach (var current in a.Edges)
             {

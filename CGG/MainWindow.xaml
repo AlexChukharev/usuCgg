@@ -17,10 +17,11 @@
                 <MenuItem Header="_Task1" Click="MenuFirstTaskClick"/>
                 <MenuItem Header="_Task2" Click="MenuSecondTaskClick"/>
                 <MenuItem Header="_Task3" Click="MenuThirdTaskClick"/>
+                <MenuItem Header="_Task4" Click="MenuFourthTaskClick"/>
                 <Separator />
                 <MenuItem Header="_Exit" />
             </MenuItem>
-            <MenuItem Header="_About" Height="30" Click="AboutClick"/>
+                    <MenuItem Header="_About" Height="30" Click="AboutClick"/>
         </Menu>
         
         <StackPanel HorizontalAlignment="Left" Grid.Row ="1" Orientation="Vertical" VerticalAlignment="Top" Name = "ArgsForm"/> 

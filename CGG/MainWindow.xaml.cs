@@ -69,6 +69,12 @@ namespace CGG
 			AddButton(ArgsForm, ThirdTaskClick);
 		}
 
+	    private void MenuFourthTaskClick(object sender, RoutedEventArgs e)
+	    {
+		    var f = new PolyCordForm();
+			f.Show();
+	    }
+
 	    private void ThirdTaskClick(object sender, RoutedEventArgs e)
 	    {
 			mainWindow.SizeChanged += ThirdResize;

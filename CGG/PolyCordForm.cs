@@ -21,8 +21,8 @@ namespace CGG
 
 		private void ClickHandler(object sender, EventArgs e)
 		{
-			double x = MousePosition.X - Location.X - pictureBox1.Location.X - 7;
-			double y = MousePosition.Y - Location.Y - pictureBox1.Location.Y - 34;
+			double x = (e as MouseEventArgs).X;
+			double y = (e as MouseEventArgs).Y;
 			if (_color)
 				BluePoly.AddVerb(x, y);
 			else
@@ -58,10 +58,13 @@ namespace CGG
 			_color = !_color;
 		}
 
-		private void GoClickHander(object sender, EventArgs e)
+		private void GoClickHander(object sender, EventArgs ev)
 		{
-			//var redPoly = Poly.Intersection(BluePoly, GreenPoly);
-			//DrawPoly(Color.DarkRed, redPoly);
+			var redPoly = Poly.Intersection(GreenPoly, BluePoly);
+			var g = Graphics.FromImage(bitmp);
+			foreach (var e in redPoly.Edges)
+				g.DrawLine(new Pen(Color.Red, 3f), new Point((int)e.A.X, (int)e.A.Y), new Point((int)e.B.X, (int)e.B.Y));
+			pictureBox1.Image = bitmp;
 		}
 
 		private void RefreshClickHandler(object sender, EventArgs e)

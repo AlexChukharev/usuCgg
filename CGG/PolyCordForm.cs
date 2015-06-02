@@ -10,8 +10,8 @@ namespace CGG
 		public Poly BluePoly = new Poly();
 		public Poly GreenPoly = new Poly();
 		public Bitmap bitmp;
-		private readonly int _heigth = 467;
-		private readonly int _width = 596;
+		private const int _height = 467;
+		private const int _width = 596;
 
 		public PolyCordForm()
 		{
@@ -47,7 +47,7 @@ namespace CGG
 
 		public void PointAdder()
 		{
-			bitmp = new Bitmap(_width, _heigth);
+			bitmp = new Bitmap(_width, _height);
 			DrawPoly(Color.Blue, BluePoly);
 			DrawPoly(Color.Green, GreenPoly);
 			pictureBox1.Image = bitmp;
@@ -69,7 +69,7 @@ namespace CGG
 
 		private void RefreshClickHandler(object sender, EventArgs e)
 		{
-			pictureBox1.Image = new Bitmap(_width, _heigth);
+			pictureBox1.Image = new Bitmap(_width, _height);
 			BluePoly = new Poly();
 			GreenPoly = new Poly();
 		}
